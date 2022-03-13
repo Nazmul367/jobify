@@ -1,3 +1,5 @@
+import cors from 'cors'
+
 import express from 'express'
 const app = express()
 
@@ -17,10 +19,11 @@ import jobsRouter from './routes/jobsRouter.js'
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
 
+app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send('HI')
+  res.send({message: 'Welcome'})
 })
 
 app.use('/api/v1/auth', authRouter)
