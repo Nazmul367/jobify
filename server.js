@@ -1,5 +1,4 @@
-import cors from 'cors'
-
+// import cors from 'cors'
 import express from 'express'
 const app = express()
 
@@ -7,6 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import 'express-async-errors'
+import morgan from 'morgan'
 // db
 // import connectDB from './db/connect.js'
 import mongoose from 'mongoose'
@@ -19,11 +19,19 @@ import jobsRouter from './routes/jobsRouter.js'
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
 
-app.use(cors())
+// app.use(cors())
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'))
+}
+
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send({message: 'Welcome'})
+  res.send({ message: 'Welcome' })
+})
+
+app.get('/api/v1', (req, res) => {
+  res.send({ message: 'API' })
 })
 
 app.use('/api/v1/auth', authRouter)
